@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RigidbodyController : MonoBehaviour {
+/// <summary>
+/// 
+/// </summary>
+[RequireComponent(typeof(Rigidbody))]
+public class RigidbodyController : MonoBehaviour 
+{
+    public float RotationSpeed = 15f;
+    private Transform tm;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Awake()
+    {
+        tm = GetComponent<Transform>();
+    }
+
+    public void UpdateTransform(Vector3 movement, Quaternion rotation)
+    {
+        tm.position = tm.position + movement;
+        tm.rotation = Quaternion.Slerp(tm.rotation, tm.rotation * rotation, Time.deltaTime * RotationSpeed);
+    }
 }
